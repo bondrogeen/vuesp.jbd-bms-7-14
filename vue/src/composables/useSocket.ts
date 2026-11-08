@@ -8,6 +8,7 @@ export const useSocket = () => {
   const { socket, isConnect } = storeToRefs(webSocket);
 
   let ping: ReturnType<typeof setInterval> | null = null;
+  let lastInfoRequest = 0;
   let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   let reconnectAttempt = 0;
   let stopped = false;
@@ -58,7 +59,16 @@ export const useSocket = () => {
 
   onMounted(() => {
     stopped = false;
-    ping = setInterval(webSocket.onPing, 1000);
+    ping = setInterval(() => {
+      webSocket.onPing();
+
+      // A reload can race with the device's snapshot: if INFO never arrives,
+      // retry it until the first response, otherwise pages stay without data.
+      if (socket.value?.readyState === WebSocket.OPEN && !webSocket.infoLoaded && Date.now() - lastInfoRequest > 2000) {
+        lastInfoRequest = Date.now();
+        webSocket.requestInfo();
+      }
+    }, 1000);
     reconnectTimer = setTimeout(connect, 100);
   });
 
@@ -70,6 +80,5 @@ export const useSocket = () => {
     if (socket.value) socket.value.close(1000);
     socket.value = null;
   });
-
   return { isConnect };
 };

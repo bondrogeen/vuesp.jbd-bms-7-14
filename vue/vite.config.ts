@@ -12,7 +12,16 @@ import Components from 'unplugin-vue-components/vite';
 
 const path = fileURLToPath(new URL('./src', import.meta.url));
 
-const { name, version, author, description, repository, license, homepage, bugs } = pkg;
+type PackageMeta = typeof pkg & {
+  author?: string;
+  repository?: unknown;
+  homepage?: string;
+  bugs?: unknown;
+};
+
+// vuesp-create removes the template repository links from package.json.
+const pkgMeta = pkg as PackageMeta;
+const { name, version, author, description, repository, license, homepage, bugs } = pkgMeta;
 const info = { name, version, author, description, repository, license, homepage, bugs };
 
 // https://vite.dev/config/

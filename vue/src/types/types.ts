@@ -41,6 +41,7 @@ export interface IWebSocket {
   pingClient: number;
   pingDevice: number;
   isInit: boolean;
+  infoLoaded: boolean;
 }
 
 // ======== IWebSocketStore ===========
