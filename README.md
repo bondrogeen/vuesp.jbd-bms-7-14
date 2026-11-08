@@ -187,6 +187,12 @@ Binary WebSocket messages at `/esp` endpoint:
 
 ## Version History
 
+### 4.0.0 (2026-11-08)
+
+- V4.0 device UI with the shared glass theme and light/dark modes.
+- Updated web dependencies and regenerated screenshots.
+- Release workflow publishes `esp32-c3-devkitm-1` firmware and LittleFS images.
+
 ### 3.4.0 (2026-07-24)
 
 - Update Web
@@ -290,7 +296,7 @@ This project is licensed under the MIT License - see LICENSE file for details.
 
 The MIT License (MIT)
 
-Copyright (c) 2021-2025, bondrogeen <bondrogeen@users.noreply.github.com>
+Copyright (c) 2021-2025, bondrogeen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
