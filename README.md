@@ -1,38 +1,79 @@
-# Vuesp.jbd-bms-7-14
+# vuesp.jbd-bms-7-14
 
+Мониторинг BMS **JBD / Xiaoxiang** на 7–14 ячеек: напряжение, ток, ёмкости, циклы, температуры и напряжения ячеек в локальном веб-интерфейсе.
 
+Проект собран на базе шаблона [Vuesp](https://github.com/bondrogeen/vuesp): прошивка PlatformIO + web UI на Vue 3 и `vuesp-components`.
 
+## Документация
+
+Подробное описание платы, распиновка, протокол кадров, ScriptRunner и ограничения — в [DOCS.md](./DOCS.md).
+
+## Особенности
+
+- UART 9600 8N1: RX GPIO5, TX GPIO6.
+- Запросы `DD A5 03 …` (basic) и `DD A5 04 …` (ячейки), проверка CRC.
+- До 14 ячеек, 1–3 NTC, RSOC, циклы и статусы защиты.
+
+## Плата и окружение
+
+- PlatformIO env: `esp32-c3-devkitm-1`
+- Прошивка: `platformio.ini`
+- Web UI: `vue/`
+- Файловая система: LittleFS, веб-сборка попадает в `data/www`
+
+## Сборка
+
+```bash
+cd vue
+npm ci
+npm run build-web
+```
+
+Полная сборка (web + прошивка):
+
+```bash
+cd vue
+npm run build
+```
+
+Либо отдельно:
+
+```bash
+~/.platformio/penv/bin/pio run
+~/.platformio/penv/bin/pio run -t buildfs
+```
+
+Прошивка: `build/esp32-c3-devkitm-1/firmware.bin`, FS: `build/esp32-c3-devkitm-1/littlefs.bin`.
+
+## Возможности
+
+- локальный веб-интерфейс без облака;
+- настройка Wi-Fi, безопасности, GPIO и файловой системы;
+- dashboard с плитками ячеек и температур;
+- сценарии и автоматизация;
+- обновление прошивки и файловой системы через веб-интерфейс.
+
+## CI
+
+GitHub Actions собирает web UI, прошивку и LittleFS для указанных env, запускает тесты ScriptRunner и публикует артефакты в релиз при пуше тега.
 
 ## Version History
+
+### 4.2.0 (2026-11-09)
+
+- Поддержка JBD BMS 7–14S, разбор basic и pack кадров.
+- Плитки ячеек, температур и статусов в dashboard.
+- Release workflow публикует `esp32-c3-devkitm-1` прошивку и LittleFS.
 
 ### 4.0.0 (2026-11-08)
 
 - V4.0 device UI with the shared glass theme and light/dark modes.
 - Updated web dependencies and regenerated screenshots.
-- Release workflow publishes `esp32-c3-devkitm-1` firmware and LittleFS images.
 
-## License
+## Репозиторий
 
-This project is licensed under the MIT License - see LICENSE file for details.
+<https://github.com/bondrogeen/vuesp.jbd-bms-7-14>
 
-The MIT License (MIT)
+## Лицензия
 
-Copyright (c) 2021-2025, bondrogeen
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+MIT — см. [LICENSE](./LICENSE).
