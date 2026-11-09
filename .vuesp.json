@@ -1,0 +1,24 @@
+{
+  "$schema": "https://vuesp.ru/schema/vuesp-project.json",
+  "name": "vuesp.jbd-bms-7-14",
+  "summary": "JBD 7-14S battery management system monitor with cell, temperature and protection data.",
+  "description": "## Vuesp JBD BMS 7-14S\n\nESP32-C3 monitor for JBD battery management systems with 7 to 14 cells. It reads pack voltage and current, individual cell voltages, NTC temperatures, state of charge, cycle count and protection/balance status flags.\n\nThe dashboard is built for a LiFePO4 battery bank and includes cell-level cards. The project uses the standard Vuesp web UI with Wi-Fi setup, GPIO, ScriptRunner, LittleFS and OTA updates.",
+  "platforms": [
+    "ESP32-C3"
+  ],
+  "tags": [
+    "bms",
+    "jbd",
+    "battery",
+    "lifepo4",
+    "esp32-c3"
+  ],
+  "preset": "bms",
+  "createdWith": "vuesp-create@1.0.1",
+  "createdAt": "2026-11-08T02:17:27+03:00",
+  "template": {
+    "source": "local",
+    "ref": "local",
+    "commit": "8ebddcfc6f90135d6b2c1532c29eac0fd293f4ae"
+  }
+}
